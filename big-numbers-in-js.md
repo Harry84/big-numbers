@@ -25,16 +25,16 @@ But what about circumstances where we need to avoid overflow and saturation?  Fo
 
     > {"id": 10852385574690032345, "id_str": "10852385574690032345", ...}
 
-The Twitter IDs detailed above are 64 bits long.  JSON is a text format (so it can represent integers of arbitrary size) but precision will be lost in JavaScript once the ID is parsed:
+The Twitter IDs detailed above are 64 bits long.  JSON is a text format (so it can represent integers of arbitrary size) but precision will be lost in JavaScript when the ID is parsed:
 
     > parseInt("10852385574690032345")
       10852385574690032000
 
-Therefore to preserve the value of an ID in JavaScript, it needs to be stored in a string or an array.
+Therefore to retain the precise value of an ID in JavaScript, it needs to be stored in a string or an array.
 
 How can we perform basic operations on Big Numbers in JS?  Here is a quick guide to a possible approach to performing addition (which incidentally may help in the Kata linked below):
 
-First of all, we need our two numbers stored in arrays, allowing us to maintain precision.  Next, we need to ensure we allow for place value when combining our two arrays.  We do this by reversing the arrays.  This way, Array1[0] and Array2[0] are the least significant digits in their respective arrays and the place value is the same for both.  Now we can loop through the arrays, adding each matching pair.  But what if an addition yields a result greater than 10?  We then need to store 1 in a 'carry' variable which can then be added during the next iteration where the place value has increased by a factor of 10 (so our 1 is now worth 10).  Also, if there's a 'carry' left over at the end, we need to add that too.  This method follows the same principle as basic addition with pen and paper!
+First of all, we need our two numbers stored in arrays, allowing us to maintain precision.  Next, we need to ensure we allow for place value when combining our two arrays.  We do this by reversing the arrays.  This way, a[0] and b[0] are the least significant digits in their respective arrays and the place value is the same for both.  Now we can loop through the arrays, adding each matching pair.  But what if an addition yields a sum greater than 10?  We then need to store 1 in a 'carry' variable which can then be added during the next iteration where the place value has increased by a factor of 10 (so our 1 is now worth 10).  Also, if there's a 'carry' left over at the end, we need to add that too.  This method follows the same principle as basic addition with pen and paper!
 
 ```JavaScript
 
@@ -43,17 +43,19 @@ var b = []; // Your 2nd number
 var c = []; // Store the result in c
 var carry = 0;                   // Declare carry variable
 for (var i = 0; i < a.length; i++) {
+
     c[i] = a[i] + b[i] + carry;
-    if (c[i] >= 10) { // Too big to fit into this place value
-        carry = 1;           // Set the carry to be added into the next digit
-        c[i] -= 10;   // Adjust to be one digit
+
+    if(c[i] >= 10) { // Sum too large to fit into this place value
+        carry = 1;           // Set carry value to be added into the next digit
+        c[i] -= 10;   
     }
     else {
         carry = 0;           // Sum was less than 10, so there's nothing to carry forward
     }
 }
 if (carry) { // Add the final carry if necessary
-    c.digits[i] = carry;
+    c[i] = carry;
 }
 
 ```
@@ -62,10 +64,10 @@ No doubt there are other approaches to adding Big Numbers together.  There is de
 
 ### References
 
-[Floating Point](https://en.wikipedia.org/wiki/Double-precision_floating-point_format)
+[Floating Point Ref](https://en.wikipedia.org/wiki/Double-precision_floating-point_format)
 
-[An Application](http://www.2ality.com/2012/07/large-integers.html)
+[Twitter Example Ref](http://www.2ality.com/2012/07/large-integers.html)
 
-[Operations reference](https://silentmatt.com/blog/2011/10/how-bigintegers-work/)
+[Ref re Operations](https://silentmatt.com/blog/2011/10/how-bigintegers-work/)
 
-[Kata](https://www.codewars.com/kata/sum-strings-as-numbers)
+[A relevant Kata](https://www.codewars.com/kata/sum-strings-as-numbers)

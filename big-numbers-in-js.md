@@ -10,7 +10,7 @@ Consciously or otherwise, we rely heavily on Big Numbers in our every day lives.
 
 #### Big Numbers in JS
 
-As specified by the ECMAScript standard, all arithmetic operations in JavaScript are done using double-precision floating-point arithmetic.  The "floating-point" format allows for a trade off between precision and range: a number is approximated to a fixed amount of "significant digits" (called the _Significand_) which is then scaled by an exponent.  Given a certain total amount of digits to play with, the decimal point (or binary point in computing) can "float" relative to the Significand, increasing the range of real numbers that can be represented.  Essentially, "floating-point" is a formulaic representation of a real number.  It occupies 64 bits of computer memory.  
+As specified by the [ECMAScript standard](http://www.ecma-international.org/ecma-262/5.1/#sec-8.5), all arithmetic operations in JavaScript are done using double-precision floating-point arithmetic.  The "floating-point" format allows for a trade off between precision and range: a number is approximated to a fixed amount of "significant digits" (called the _Significand_) which is then scaled by an exponent.  Given a certain total amount of digits to play with, the decimal point (or binary point in computing) can "float" relative to the Significand, increasing the range of real numbers that can be represented.  Essentially, "floating-point" is a formulaic representation of a real number.  It occupies 64 bits of computer memory.  
 
 This system has its limitations.  The binary floating-point format used by JS (binary64) has a standard specification:
 

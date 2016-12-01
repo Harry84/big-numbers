@@ -20,9 +20,18 @@ This system has its limitations.  The binary floating-point format used by JS (b
 
 * **Significand precision**: 53 bits
 
-Crucially, this gives us 15-17 significant decimal digits worth of precision.  But what if we want to perform calculations on number strings with a larger number of digits?  Our real integer values will no longer be precisely represented by the number format and will suffer from rounding errors.
+Crucially, this gives us 15-17 significant decimal digits worth of precision.
 
-This is analogous to overflow: an inherent limitation of fixed-precision arithmetic.  Consider trying to add 1 more unit to a 4-digit Odometer's display which currently reads 9999.  Similarly, a fixed-precision integer sometimes exhibits wraparound if the numbers involved grow too large to be represented at the fixed level of precision. Some processors overcome this problem via saturation (if a result can't be represented, it is replaced with the nearest representable value).
+For example:
+```javascript
+console.log(999999999999999) // 999999999999999
+console.log(9999999999999999) // 10000000000000000
+
+```
+
+But what if we want to perform calculations on number strings with a larger number of digits?  Our real integer values will no longer be precisely represented by the number format and will suffer from rounding errors.
+
+This is analogous to overflow: an inherent limitation of fixed-precision arithmetic.  Consider trying to add 1 more unit to a 4-digit Odometer's display which currently reads 9999, rather than incrementing up to 10,000, it would reset to 0000.  Similarly, a fixed-precision integer sometimes exhibits wraparound if the numbers involved grow too large to be represented at the fixed level of precision. Some processors overcome this problem via saturation (if a result can't be represented, it is replaced with the nearest representable value).
 
 But what about circumstances where we need to avoid overflow and saturation?  The 53 bit limit becomes an issue whenever an API returns 64 bit numbers.  For example, the Twitter API encodes tweets in JSON as follows:
 
